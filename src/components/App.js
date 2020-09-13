@@ -8,13 +8,20 @@ class App extends React.Component {
     time: "",
   };
 
-  onFormSubmit = (timerMinutes, timerSeconds) => {
-    this.setState({ time: `${timerMinutes}:${timerSeconds}` });
+  onFormSubmit = (startMinutes, startSeconds) => {
+    let intervalTime = startMinutes * 60 + parseInt(startSeconds);
+    console.log(intervalTime);
+    setInterval(() => {
+      const minutes = Math.floor(intervalTime / 60);
+      let seconds = intervalTime % 60;
+
+      if (seconds < 10) seconds = "0" + seconds;
+
+      this.setState({ time: `${minutes}:${seconds}` });
+      intervalTime--;
+    }, 1000);
   };
 
-  displayCountdown = () => {
-    return `<h1> ${this.state.minutes}:${this.state.seconds} </h1>`;
-  };
   render() {
     return (
       <div>
